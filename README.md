@@ -2,6 +2,31 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Contact form (email) setup
+
+This project uses Resend to send contact form emails.
+
+1. Install deps (already in package.json):
+
+```
+npm i
+```
+
+2. Create `.env.local` in project root and add:
+
+```
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=your_destination_email@example.com
+```
+
+3. Run dev server:
+
+```
+npm run dev
+```
+
+The API route is at `src/app/api/contact/route.ts`.
+
 First, run the development server:
 
 ```bash

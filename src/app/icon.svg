@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .border { fill: none; stroke: #000; stroke-width: 24; }
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect x="12" y="12" width="488" height="488" fill="#ffffff" class="neubg"/>
+  <!-- Bold border -->
+  <rect x="12" y="12" width="488" height="488" class="border"/>
+
+  <!-- Geometric shapes in Neubrutalism palette -->
+  <!-- Cyan square -->
+  <rect x="80" y="96" width="160" height="160" fill="#4ecdc4"/>
+  <rect x="80" y="96" width="160" height="160" class="border"/>
+
+  <!-- Yellow circle -->
+  <circle cx="360" cy="176" r="80" fill="#ffe66d"/>
+  <circle cx="360" cy="176" r="80" class="border"/>
+
+  <!-- Red triangle -->
+  <polygon points="128,400 248,256 368,400" fill="#ff6b6b"/>
+  <polygon points="128,400 248,256 368,400" class="border"/>
+
+  <!-- Initials: PC -->
+  <g transform="translate(0,6)">
+    <path d="M112 432h72c26 0 48-22 48-48s-22-48-48-48h-48v24h48c13 0 24 11 24 24s-11 24-24 24h-72v24z" fill="#000"/>
+    <path d="M328 360c-40 0-72 32-72 72 0 40 32 72 72 72 23 0 44-11 57-28l-18-14c-9 12-23 18-39 18-26 0-48-22-48-48s22-48 48-48c16 0 30 8 39 18l18-14c-13-17-34-28-57-28z" fill="#000"/>
+  </g>
+</svg>
+
+
