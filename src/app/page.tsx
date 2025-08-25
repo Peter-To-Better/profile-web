@@ -11,7 +11,7 @@ import Skills from "./components/Skills";
 export const metadata: Metadata = {
   title: "Peter Chen | Profile",
   description:
-    "Peter Chen 個人前端工程師作品集頁面，Next.js + TailwindCSS 打造的簡約科技風",
+    "Peter Chen 個人前端工程師作品集頁面，使用 Next.js + TailwindCSS 打造符合響應式設計的網站，展示專案經驗與技能。",
 };
 
 export default function Home() {
