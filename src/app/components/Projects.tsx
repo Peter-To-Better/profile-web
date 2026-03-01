@@ -1,8 +1,45 @@
 "use client";
 
+import Image from "next/image";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionContainer from "./SectionContainer";
 import SectionDivider from "./SectionDivider";
+
+const DESCRIPTION_LIMIT = 120;
+
+function ProjectDescription({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = text.length > DESCRIPTION_LIMIT;
+
+  return (
+    <p className="text-gray-600 text-base mb-6 leading-relaxed font-medium">
+      {isLong && !expanded ? (
+        <>
+          {text.slice(0, DESCRIPTION_LIMIT).trimEnd()}...{" "}
+          <button
+            onClick={() => setExpanded(true)}
+            className="text-[#ff6b6b] font-bold hover:underline cursor-pointer"
+          >
+            Read more
+          </button>
+        </>
+      ) : (
+        <>
+          {text}{" "}
+          {isLong && (
+            <button
+              onClick={() => setExpanded(false)}
+              className="text-[#ff6b6b] font-bold hover:underline cursor-pointer"
+            >
+              Read less
+            </button>
+          )}
+        </>
+      )}
+    </p>
+  );
+}
 
 const projects = [
   {
@@ -16,36 +53,42 @@ const projects = [
       "Google Search Console",
       "Google Domains",
     ],
-    image: "/images/project1.jpg",
+    image: "/images/project-preview/blog.png",
     link: "https://shouren-blog.lanya.dev/",
     github: "https://github.com/ShouShouRen/shoublog",
   },
   {
-    title: "Task Management App",
+    title: "Tongue-Ai-Agent",
     description:
-      "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
-    image: "/images/project2.jpg",
-    link: "#",
-    github: "#",
+      "This intelligent tongue diagnosis and analysis system, based on traditional Chinese medicine theory, combines computer vision models with local large language models (LLM) to provide real-time tongue image recognition, constitution analysis, and health advice. It also has long-term memory capabilities to track users' health trends.",
+    technologies: [
+      "Electron",
+      "React",
+      "FastAPI",
+      "LangGraph agent workflow",
+      "PostgreSQL",
+    ],
+    image: "/images/project-preview/toung-ai-agent.png",
+    link: "https://github.com/ShouShouRen/Tongue-Ai-Agent",
+    github: "https://github.com/ShouShouRen/Tongue-Ai-Agent",
   },
   {
     title: "Portfolio Website",
     description:
       "A modern, responsive portfolio website showcasing projects and skills with smooth animations and optimal performance.",
     technologies: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
-    image: "/images/project3.jpg",
+    image: "/images/project-preview/profile.png",
     link: "#",
     github: "#",
   },
   {
-    title: "Weather Dashboard",
+    title: "Carbon-ESG",
     description:
-      "A weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-    technologies: ["React", "OpenWeather API", "Chart.js", "Geolocation API"],
-    image: "/images/project4.jpg",
-    link: "#",
-    github: "#",
+      "In Taiwan, carbon credit trading is mainly overseen by the Taiwan Carbon Exchange and related government agencies. As the market is still evolving, entry barriers and procedures remain challenging, particularly for small and medium-sized enterprises (SMEs). This limits their ability to efficiently access or trade carbon credits.To address this issue, this project proposes an online carbon credit trading platform integrated with blockchain technology. By leveraging smart contracts, the platform ensures transparent, traceable, and secure transactions, with all issuance, transfer, and retirement records verifiable on-chain. By lowering participation barriers, the platform aims to enhance market accessibility, liquidity, and overall progress toward sustainable development goals.",
+    technologies: ["PHP", "MySQL", "Bootstrap", "Web3.js"],
+    image: "/images/project-preview/esg-carbon.png",
+    link: "https://github.com/hongyui/Carbon-ESG",
+    github: "https://github.com/hongyui/Carbon-ESG",
   },
 ];
 
@@ -85,12 +128,21 @@ export default function Projects() {
             >
               <div className="bg-white border-4 border-black overflow-hidden transition-all duration-200 hover:scale-105 neubrutalism-shadow neubrutalism-shadow-hover">
                 <div className="h-48 bg-gradient-to-br from-[#4ecdc4]/20 to-[#ffe66d]/20 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b6b]/10 via-transparent to-[#ff6b6b]/10" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 border-4 border-black flex items-center justify-center neubrutalism-shadow">
-                      <div className="w-8 h-8 bg-[#4ecdc4] rounded" />
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 border-4 border-black flex items-center justify-center neubrutalism-shadow">
+                        <div className="w-8 h-8 bg-[#4ecdc4] rounded" />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="p-6">
@@ -98,9 +150,7 @@ export default function Projects() {
                     {project.title}
                   </h3>
 
-                  <p className="text-gray-600 text-base mb-6 leading-relaxed font-medium">
-                    {project.description}
-                  </p>
+                  <ProjectDescription text={project.description} />
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech) => (
