@@ -1,53 +1,47 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionContainer from "./SectionContainer";
 import SectionDivider from "./SectionDivider";
+import { featuredProjects } from "../data/projects";
 
-const projects = [
-  {
-    title: "shou shou ren blog",
-    description:
-      "A blog built with hexo and deployed on vercel with Google Analytics, Google Search Console and Google Domains you can search the name called '瘦瘦仁' to find the blog",
-    technologies: [
-      "Hexo",
-      "Vercel",
-      "Google Analytics",
-      "Google Search Console",
-      "Google Domains",
-    ],
-    image: "/images/project1.jpg",
-    link: "https://shouren-blog.lanya.dev/",
-    github: "https://github.com/ShouShouRen/shoublog",
-  },
-  {
-    title: "Task Management App",
-    description:
-      "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
-    technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Express"],
-    image: "/images/project2.jpg",
-    link: "#",
-    github: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern, responsive portfolio website showcasing projects and skills with smooth animations and optimal performance.",
-    technologies: ["Next.js", "Framer Motion", "Tailwind CSS", "TypeScript"],
-    image: "/images/project3.jpg",
-    link: "#",
-    github: "#",
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "A weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-    technologies: ["React", "OpenWeather API", "Chart.js", "Geolocation API"],
-    image: "/images/project4.jpg",
-    link: "#",
-    github: "#",
-  },
-];
+const DESCRIPTION_LIMIT = 120;
+
+function ProjectDescription({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = text.length > DESCRIPTION_LIMIT;
+
+  return (
+    <p className="text-gray-600 text-base mb-6 leading-relaxed font-medium">
+      {isLong && !expanded ? (
+        <>
+          {text.slice(0, DESCRIPTION_LIMIT).trimEnd()}...{" "}
+          <button
+            onClick={() => setExpanded(true)}
+            className="text-[#ff6b6b] font-bold hover:underline cursor-pointer"
+          >
+            Read more
+          </button>
+        </>
+      ) : (
+        <>
+          {text}{" "}
+          {isLong && (
+            <button
+              onClick={() => setExpanded(false)}
+              className="text-[#ff6b6b] font-bold hover:underline cursor-pointer"
+            >
+              Read less
+            </button>
+          )}
+        </>
+      )}
+    </p>
+  );
+}
 
 export default function Projects() {
   return (
@@ -73,7 +67,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
@@ -85,12 +79,21 @@ export default function Projects() {
             >
               <div className="bg-white border-4 border-black overflow-hidden transition-all duration-200 hover:scale-105 neubrutalism-shadow neubrutalism-shadow-hover">
                 <div className="h-48 bg-gradient-to-br from-[#4ecdc4]/20 to-[#ffe66d]/20 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#ff6b6b]/10 via-transparent to-[#ff6b6b]/10" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 border-4 border-black flex items-center justify-center neubrutalism-shadow">
-                      <div className="w-8 h-8 bg-[#4ecdc4] rounded" />
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 border-4 border-black flex items-center justify-center neubrutalism-shadow">
+                        <div className="w-8 h-8 bg-[#4ecdc4] rounded" />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="p-6">
@@ -98,9 +101,7 @@ export default function Projects() {
                     {project.title}
                   </h3>
 
-                  <p className="text-gray-600 text-base mb-6 leading-relaxed font-medium">
-                    {project.description}
-                  </p>
+                  <ProjectDescription text={project.description} />
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech) => (
@@ -142,19 +143,14 @@ export default function Projects() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center mt-12"
         >
-          <button
-            onClick={() => {
-              const element = document.getElementById("contact");
-              if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
+          <Link
+            href="/projects"
             className="inline-flex items-center gap-3 bg-white border-4 border-black text-black hover:bg-black hover:text-white px-8 py-4 text-lg font-black transition-all duration-200 hover:scale-105 cursor-pointer neubrutalism-shadow neubrutalism-shadow-hover"
           >
-            <span>View More Projects</span>
+            <span>View All Projects</span>
             <svg
               className="w-4 h-4"
               fill="none"
@@ -168,7 +164,7 @@ export default function Projects() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </button>
+          </Link>
         </motion.div>
       </SectionContainer>
     </>
