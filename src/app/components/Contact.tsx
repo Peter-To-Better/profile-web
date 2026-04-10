@@ -29,7 +29,7 @@ export default function Contact() {
             Get In Touch
           </h2>
           <p className="text-gray-600 text-xl max-w-3xl mx-auto font-medium">
-            👉 You are welcome to contact me for collaboration or to share your
+            You are welcome to contact me for collaboration or to share your
             suggestions.
           </p>
         </motion.div>
