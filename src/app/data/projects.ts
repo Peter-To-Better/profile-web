@@ -57,7 +57,7 @@ export const projects: Project[] = [
       "Google Domains",
     ],
     image: "/images/project-preview/blog.png",
-    link: "https://peter-to-better-blog.lanya.dev/",
+    link: "https://peter-to-better.com/",
     github: "https://github.com/Peter-To-Better/blog",
     featured: true,
   },
